@@ -27,42 +27,43 @@ void setup()
 
 void loop() 
 {
-  //fazer o mapping do pwm de 0 a 1000
-  int pwm = 200;
-  int timer = 225;
-  Serial.println(pwm, timer);
+  int timer = 150;
+  // pedro: 125
+  // andre: 150
+  // dimitri: vai se fuder
+  Serial.println(timer);
    if(bluetooth.available() > 0)
    {
 	char direcao = bluetooth.read();
     if (direcao == '1') {
-    analogWrite(7,pwm);
+    digitalWrite(7,HIGH);
     digitalWrite(6,LOW);
-    analogWrite(5,pwm);
+    digitalWrite(5,HIGH);
     digitalWrite(4,LOW);
     Serial.println("LIGADO");
     }
     if (direcao == '0') {
     digitalWrite(7,LOW);
-    analogWrite(6,pwm);
+    digitalWrite(6,HIGH);
     digitalWrite(5,LOW);
-    analogWrite(4,pwm);
+    digitalWrite(4,HIGH);
     Serial.println("DESLIGADO");
     }
 
     if (direcao == '3'){
       digitalWrite(7,LOW);
-      analogWrite(6,pwm);
-      analogWrite(5,pwm);
+      digitalWrite(6,HIGH);
+      digitalWrite(5,HIGH);
       digitalWrite(4,LOW);
       Serial.println("DIREITA");
       delay(timer);
       direcao = '4';
     }
     if (direcao == '2'){
-      analogWrite(7,pwm);
+      digitalWrite(7,HIGH);
       digitalWrite(6,LOW);
       digitalWrite(5,LOW);
-      analogWrite(4,pwm);
+      digitalWrite(4,HIGH);
       Serial.println("ESQUERDA");
       delay(timer);
       direcao = '4';
@@ -76,32 +77,37 @@ void loop()
     }
     if (direcao == '5'){
       digitalWrite(7,LOW);
-      analogWrite(6,pwm);
-      analogWrite(5,pwm);
+      digitalWrite(6,HIGH);
+      digitalWrite(5,HIGH);
       digitalWrite(4,LOW);
       Serial.println("FULL RIGHT");
     }
     if (direcao == '6'){
-      analogWrite(7,pwm);
+      digitalWrite(7,HIGH);
       digitalWrite(6,LOW);
       digitalWrite(5,LOW);
-      analogWrite(4,pwm);
+      digitalWrite(4,HIGH);
       Serial.println("FULL LEFT");
     }
-    if (direcao == '7'){
-      pwm += 100;
-      timer += 25;
-      if(pwm > 1000){
-        pwm = 1000;
-        timer -= 25;
+    if(direcao == '7'){
+      for(int i = 1; i <= 1000; i++){
+        direcao = bluetooth.read();
+        if(direcao == '4'){
+          break;
+        }
+        digitalWrite(7,HIGH);
+        digitalWrite(6,LOW);
+        digitalWrite(5,LOW);
+        digitalWrite(4,HIGH);
+        delay(200);
+        digitalWrite(7,LOW);
+        digitalWrite(6,HIGH);
+        digitalWrite(5,HIGH);
+        digitalWrite(4,LOW);
+        delay(200);
       }
-    if (direcao == '8'){
-      pwm -= 100;
-      timer -= 25;
-      if(pwm < 0){
-        pwm = 0;
-        timer -= 25;
+
       }
     }
-    }
-} }
+    
+} 
