@@ -1,0 +1,44 @@
+void setup() {
+  //motor direito
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  //motor esquerdo
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+
+//sensor direito
+  pinMode(A1, INPUT);
+  //sensor esquerdo
+  pinMode(A3, INPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int leftOptic = analogRead(A3);
+  int rightOptic = analogRead(A1);
+  int pwm = 120; //define a rotação dos motores, vai de 0 a 255
+
+  Serial.print(leftOptic);
+  Serial.print(" ");
+  Serial.println(rightOptic);
+
+  if(leftOptic < 300 && rightOptic < 300){ //se os dois detectarem branco, vai reto
+    analogWrite(11, pwm);
+    digitalWrite(10, LOW);
+    analogWrite(6, pwm);
+    digitalWrite(5, LOW);
+  }
+  if(leftOptic >= 300 && rightOptic < 300){ //se o esquerdo detectar preto, vai para a esquerda
+    digitalWrite(11, HIGH);    
+    digitalWrite(10, LOW);    
+    digitalWrite(6, LOW);    
+    digitalWrite(5, HIGH);    
+  }
+  if(leftOptic < 300 && rightOptic >= 300){ //se o direito detectar preto, vai para a direita
+    digitalWrite(11, LOW);
+    digitalWrite(10, HIGH);
+    digitalWrite(6, HIGH);
+    digitalWrite(5, LOW);
+  }
+}
