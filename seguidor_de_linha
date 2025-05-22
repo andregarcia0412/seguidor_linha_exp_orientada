@@ -30,9 +30,9 @@ void loop() {
     analogWrite(5, pwm);
   }
   if(leftOptic >= 300 && rightOptic < 300){ //se o esquerdo detectar preto, vai para a esquerda
-    analogWrite(11, HIGH);    
+    digitalWrite(11, HIGH);    
     digitalWrite(10, LOW);    
-    analogWrite(6, HIGH);    
+    digitalWrite(6, HIGH);    
     digitalWrite(5, LOW);    
   }
   if(leftOptic < 300 && rightOptic >= 300){ //se o direito detectar preto, vai para a direita
