@@ -52,15 +52,15 @@ void loop() {
     digitalWrite(5, LOW);
     servo_4.write(90);
     delay(500);
-    frente = 0.01723 * readUltrasonicDistance(9, 8);
+    frente = 0.01723 * readUltrasonicDistance(4,2);
 
     servo_4.write(180);
     delay(500);
-    esquerda = 0.01723 * readUltrasonicDistance(9, 8);
+    esquerda = 0.01723 * readUltrasonicDistance(4, 2);
 
     servo_4.write(0);
     delay(500);
-    direita = 0.01723 * readUltrasonicDistance(9, 8);
+    direita = 0.01723 * readUltrasonicDistance(4, 2);
 
     servo_4.write(90);
     delay(200);
@@ -72,43 +72,43 @@ void loop() {
     Serial.print(" Esquerda: ");
     Serial.println(esquerda);
     Serial.println("-------------------------------------------------------------");
-    if (direita > esquerda && direita > 25){
+    if (direita > esquerda && direita > 50){
       andar_direita(200);
-    } else if (esquerda > 25){
+    } else if (esquerda > 50){
       andar_esquerda(200);
-    } else{
-      andar_tras(200);
-    }
+     } //else{
+    //   andar_tras(200);
+    // }
 
-    delay(200);
+    delay(120);
   } else{
-      frente = 0.01723 * readUltrasonicDistance(9, 8);
+      frente = 0.01723 * readUltrasonicDistance(4, 2);
       andar_frente(200);
     }
   delay(200);
   }
 
   void andar_direita(int vel){
-    analogWrite(11, vel);
-    digitalWrite(10, LOW);
-    analogWrite(6, vel);
+    digitalWrite(11, LOW);
+    digitalWrite(10, HIGH);
+    digitalWrite(6, HIGH);
     digitalWrite(5, LOW);
   }
   void andar_esquerda(int vel){
-    digitalWrite(11, LOW);
-    analogWrite(10, vel);
-    digitalWrite(6, LOW);
-    analogWrite(5, vel);
-  }
-  void andar_tras(int vel){
-    analogWrite(11, vel);
+    digitalWrite(11, HIGH);
     digitalWrite(10, LOW);
     digitalWrite(6, LOW);
-    analogWrite(5, vel);
+    digitalWrite(5, HIGH);
+  }
+  void andar_tras(int vel){
+    digitalWrite(11, HIGH);
+    digitalWrite(10, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(5, HIGH);
   }
   void andar_frente(int vel){
-    digitalWrite(11, LOW);
-    analogWrite(10, vel);
-    analogWrite(6, vel);
+    digitalWrite(11, HIGH);
+    digitalWrite(10, LOW);
+    digitalWrite(6, HIGH);
     digitalWrite(5, LOW);   
   }
