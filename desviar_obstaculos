@@ -73,29 +73,42 @@ void loop() {
     Serial.println(esquerda);
     Serial.println("-------------------------------------------------------------");
     if (direita > esquerda && direita > 25){
-        digitalWrite(11, HIGH);
-        digitalWrite(10, LOW);
-        digitalWrite(6, HIGH);
-        digitalWrite(5, LOW);
+      andar_direita(200);
     } else if (esquerda > 25){
-        digitalWrite(11, LOW);
-        digitalWrite(10, HIGH);
-        digitalWrite(6, LOW);
-        digitalWrite(5, HIGH);
+      andar_esquerda(200);
     } else{
-      digitalWrite(11, HIGH);
-      digitalWrite(10, LOW);
-      digitalWrite(6, LOW);
-      digitalWrite(5, HIGH);
+      andar_tras(200);
     }
 
     delay(200);
   } else{
       frente = 0.01723 * readUltrasonicDistance(9, 8);
-      digitalWrite(11, LOW);
-      digitalWrite(10, HIGH);
-      digitalWrite(6, HIGH);
-      digitalWrite(5, LOW);
+      andar_frente(200);
     }
   delay(200);
+  }
+
+  void andar_direita(int vel){
+    analogWrite(11, vel);
+    digitalWrite(10, LOW);
+    analogWrite(6, vel);
+    digitalWrite(5, LOW);
+  }
+  void andar_esquerda(int vel){
+    digitalWrite(11, LOW);
+    analogWrite(10, vel);
+    digitalWrite(6, LOW);
+    analogWrite(5, vel);
+  }
+  void andar_tras(int vel){
+    analogWrite(11, vel);
+    digitalWrite(10, LOW);
+    digitalWrite(6, LOW);
+    analogWrite(5, vel);
+  }
+  void andar_frente(int vel){
+    digitalWrite(11, LOW);
+    analogWrite(10, vel);
+    analogWrite(6, vel);
+    digitalWrite(5, LOW);   
   }
